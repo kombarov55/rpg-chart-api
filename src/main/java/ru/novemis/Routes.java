@@ -2,6 +2,7 @@ package ru.novemis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import ru.novemis.model.Person;
 import ru.novemis.service.PersonService;
@@ -17,6 +18,14 @@ public class Routes {
     private ObjectMapper objectMapper;
     @Autowired
     private PersonService personService;
+    @Autowired
+    private HiddenProperties hiddenProperties;
+
+    @Value("${ssl.keystorePath}")
+    private String keystorePath;
+
+    @Value("${ssl.truststorePath}")
+    private String truststorePath;
 
     @PostConstruct
     public void defineRoutes() {
@@ -26,11 +35,17 @@ public class Routes {
             List<Person> persons = personService.getAll();
             return objectMapper.writeValueAsString(persons);
         });
+
+        Spark.get("/ping", (rq, rs) -> "pong");
     }
 
 
     private void configureSpark() {
         Spark.port(8080);
+        Spark.secure(
+          keystorePath, hiddenProperties.get("ssl.keystorePassword"),
+          truststorePath, hiddenProperties.get("ssl.truststorePassword")
+        );
     }
 
 }
