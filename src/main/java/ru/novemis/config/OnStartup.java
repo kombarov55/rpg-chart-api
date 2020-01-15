@@ -6,19 +6,15 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.novemis.model.Person;
-import ru.novemis.util.HiddenProperties;
 
 @Component
 public class OnStartup implements InitializingBean {
 
     @Autowired
     private ConnectionSource jdbcConnectionSource;
-    @Autowired
-    private HiddenProperties hiddenProperties;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         TableUtils.createTableIfNotExists(jdbcConnectionSource, Person.class);
-        hiddenProperties.load();
     }
 }

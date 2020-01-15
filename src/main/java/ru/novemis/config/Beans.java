@@ -15,7 +15,10 @@ import ru.novemis.model.Person;
 
 @Configuration
 @ComponentScan("ru.novemis")
-@PropertySource("classpath:/application.properties")
+@PropertySource(value = {
+  "classpath:application.properties",
+  "file:application.properties"
+}, ignoreResourceNotFound = true)
 public class Beans {
 
     @Value("${jdbc.url}")

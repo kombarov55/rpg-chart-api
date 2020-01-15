@@ -28,6 +28,10 @@ public class Routes {
     private String keystorePath;
     @Value("${ssl.truststorePath}")
     private String truststorePath;
+    @Value("${server.port:8081}")
+    private int port;
+    @Value("${server.sslEnabled}")
+    private boolean sslEnabled;
 
     @PostConstruct
     public void defineRoutes() {
@@ -37,16 +41,22 @@ public class Routes {
             List<Person> persons = personService.getAll();
             return objectMapper.writeValueAsString(persons);
         });
-
         Spark.get("/ping", (rq, rs) -> "pong");
+        Spark.get("/shutdown", (rq, rs) -> {
+//            Spark.stop();
+            System.exit(0);
+            return "Stopped";
+        });
     }
 
     private void configureSpark() {
-        Spark.port(8080);
-        Spark.secure(
-          keystorePath, hiddenProperties.get("ssl.keystorePassword"),
-          truststorePath, hiddenProperties.get("ssl.truststorePassword")
-        );
+        Spark.port(port);
+        if (sslEnabled) {
+            Spark.secure(
+              keystorePath, hiddenProperties.getKeystorePassword(),
+              truststorePath, hiddenProperties.getTruststorePassword()
+            );
+        }
     }
 
 }
