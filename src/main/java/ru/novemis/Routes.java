@@ -1,6 +1,7 @@
 package ru.novemis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Configuration
+@Slf4j
 public class Routes {
 
     @Autowired
@@ -24,7 +26,6 @@ public class Routes {
 
     @Value("${ssl.keystorePath}")
     private String keystorePath;
-
     @Value("${ssl.truststorePath}")
     private String truststorePath;
 
@@ -39,7 +40,6 @@ public class Routes {
 
         Spark.get("/ping", (rq, rs) -> "pong");
     }
-
 
     private void configureSpark() {
         Spark.port(8080);
