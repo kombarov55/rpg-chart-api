@@ -5,8 +5,8 @@ import com.j256.ormlite.table.TableUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.novemis.HiddenProperties;
 import ru.novemis.model.Person;
+import ru.novemis.util.HiddenProperties;
 
 @Component
 public class OnStartup implements InitializingBean {

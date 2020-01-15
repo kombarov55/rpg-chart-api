@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import ru.novemis.model.Person;
 import ru.novemis.service.PersonService;
+import ru.novemis.util.HiddenProperties;
 import spark.Spark;
 
 import javax.annotation.PostConstruct;

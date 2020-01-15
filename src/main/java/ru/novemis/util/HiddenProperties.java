@@ -1,4 +1,4 @@
-package ru.novemis;
+package ru.novemis.util;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
