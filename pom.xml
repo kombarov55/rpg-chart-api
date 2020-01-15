@@ -10,7 +10,7 @@
 
     <properties>
         <spring.version>4.2.0.RELEASE</spring.version>
-        <spark.version>2.2</spark.version>
+        <spark.version>2.7.2</spark.version>
     </properties>
 
     <dependencies>
